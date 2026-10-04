@@ -12,7 +12,7 @@ A dependency-free, mobile-first static PWA for evidence-led management of Jacqui
 - `vercel.json`: CSP and defensive response headers, plus revalidation for data and the service worker.
 - `scripts/validate.py`: semantic, safety and compatibility checks.
 
-No backend or browser storage is used. Leads and claims/forms are intentionally non-functional until a secure authenticated backend exists.
+The public dashboard remains static and read-only. A separate `/admin.html` first-phase interface can use the dedicated Supabase project for listings, content and tasks after operator setup. It uses a public publishable key and memory-only Auth sessions; leads and claims/forms remain intentionally non-functional.
 
 ## Data semantics
 
@@ -37,6 +37,6 @@ Serve over HTTP rather than opening `index.html` as a file (for example, `python
 
 A production data collector must authenticate outside this static app, validate against the schema, redact all PII/health data, write atomically, and set source/as-of/freshness/state per metric. Revenue, listing, content, lead and claim records are not integrated. Secure server-side access control, audit logging, retention policy and consent handling are required before sensitive workflows are enabled.
 
-## Private management scaffold
+## Private administration
 
-Private management is explicitly **not connected**. The fail-closed server boundary is under `api/`; protected record contracts are under `schemas/private/`; and a locked-down fresh-project migration is under `supabase/migrations/`. These materials are excluded from the static deployment bundle where appropriate. See `docs/PRIVATE_BACKEND_SETUP.md` before any future provisioning. No fake records, browser-storage fallback, health/patient/client data, or external resources are included.
+The implementation is pinned to Supabase project `gqbekbrxftmfpgnkqodo`, but fails closed until its migrations, Jacqui's Auth user/membership and `SUPABASE_PUBLISHABLE_KEY` are configured by an operator. Vercel and the browser require no service-role or secret key. Strict membership checks, default-deny RLS, scoped security-definer RPCs, append-only audit events and database-backed rate limits protect the first-phase listings/content/tasks UI. See `docs/PRIVATE_BACKEND_SETUP.md`. No fake records, persistent browser-storage fallback, health/patient/client data, public lead intake or form collection are included.
