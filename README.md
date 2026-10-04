@@ -4,7 +4,8 @@ A dependency-free, mobile-first static PWA for evidence-led management of Jacqui
 
 ## Architecture
 
-- `index.html`: accessible application shell.
+- `index.html`: accessible public dashboard shell, with same-tab navigation to Manage / Edit.
+- `admin.html`: the matching branded private shell, with same-tab navigation back to the dashboard. It remains a separately authenticated workspace; visual unification does not weaken its security boundary.
 - `app.js`: safe DOM construction using `textContent`/attributes; routing, filtering and derived totals.
 - `data/portfolio.json`: versioned source of truth. Legacy fields remain during migration; `metrics` carries field-level source, date, freshness and explicit state.
 - `data/portfolio.schema.json`: machine-readable JSON Schema contract.
@@ -16,7 +17,7 @@ The public dashboard remains static and read-only. A separate `/admin.html` firs
 
 ## Data semantics
 
-Traffic is only the ChatGPT Sites Analytics period **4 September–3 October 2026**. Visitor counts are site-level and portfolio totals are not deduplicated. GA4 and Search Console values describe coverage only. They are never presented as the traffic source. Unknown values are `null` with an explicit state, never converted to zero.
+Traffic is only the frozen ChatGPT Sites Analytics period **4 September–3 October 2026**. Visitor counts are site-level and portfolio totals are not deduplicated. The snapshot contains no SEO reporting metrics. GA4 and Google Search Console fields describe setup/coverage metadata only; live reporting for both is visibly **Not connected** until a real integration supplies data. Google metadata is never presented as the source of snapshot traffic or as clicks, impressions, rankings or indexed-page counts. Unknown values are `null` with an explicit state, never converted to zero.
 
 Permitted states: `verified`, `unavailable`, `not_connected`, `pending_period`, `stale`, `failed_collection`.
 
