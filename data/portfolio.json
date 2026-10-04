@@ -1,6 +1,15 @@
 {
-  "generated": "2026-10-04",
-  "snapshotPeriod": "4 September–3 October 2026",
+  "schemaVersion": "2.0.0",
+  "generatedAt": "2026-10-04",
+  "portfolio": {
+    "name": "Jacqui directory portfolio",
+    "analyticsPeriod": {
+      "start": "2026-09-04",
+      "end": "2026-10-03",
+      "label": "4 September–3 October 2026"
+    },
+    "visitorScope": "Site-level visitors; totals are not deduplicated across sites."
+  },
   "sites": [
     {
       "rank": null,
@@ -17,7 +26,57 @@
       "ga4": "Covered",
       "searchConsole": "Not recorded",
       "sitemapUrls": null,
-      "isNew": false
+      "isNew": false,
+      "id": "site-directory-command-centre",
+      "slug": "directory-command-centre",
+      "metrics": {
+        "traffic": {
+          "visitors": 6,
+          "views": 119,
+          "state": "verified",
+          "source": "ChatGPT Sites Analytics",
+          "asOf": "2026-10-03",
+          "period": "2026-09-04 to 2026-10-03",
+          "freshness": "current"
+        },
+        "seo": {
+          "clicks": null,
+          "impressions": null,
+          "averagePosition": null,
+          "indexedPages": null,
+          "state": "unavailable",
+          "source": "Search Console coverage metadata only",
+          "asOf": "2026-10-04",
+          "freshness": "unavailable"
+        },
+        "revenue": {
+          "actualRevenue": null,
+          "state": "not_connected",
+          "source": "No revenue integration",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "listings": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "content": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        }
+      },
+      "readiness": {
+        "featured": "not_connected",
+        "sponsorship": "not_connected",
+        "claimedListings": "not_connected",
+        "leadGeneration": "not_connected"
+      }
     },
     {
       "rank": 1,
@@ -34,7 +93,57 @@
       "ga4": "Covered",
       "searchConsole": "Not recorded",
       "sitemapUrls": null,
-      "isNew": false
+      "isNew": false,
+      "id": "site-neurodiversity-assessment-australia",
+      "slug": "neurodiversity-assessment-australia",
+      "metrics": {
+        "traffic": {
+          "visitors": 191,
+          "views": 5460,
+          "state": "verified",
+          "source": "ChatGPT Sites Analytics",
+          "asOf": "2026-10-03",
+          "period": "2026-09-04 to 2026-10-03",
+          "freshness": "current"
+        },
+        "seo": {
+          "clicks": null,
+          "impressions": null,
+          "averagePosition": null,
+          "indexedPages": null,
+          "state": "unavailable",
+          "source": "Search Console coverage metadata only",
+          "asOf": "2026-10-04",
+          "freshness": "unavailable"
+        },
+        "revenue": {
+          "actualRevenue": null,
+          "state": "not_connected",
+          "source": "No revenue integration",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "listings": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "content": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        }
+      },
+      "readiness": {
+        "featured": "not_connected",
+        "sponsorship": "not_connected",
+        "claimedListings": "not_connected",
+        "leadGeneration": "not_connected"
+      }
     },
     {
       "rank": 2,
@@ -51,7 +160,57 @@
       "ga4": "Covered",
       "searchConsole": "Not recorded",
       "sitemapUrls": null,
-      "isNew": false
+      "isNew": false,
+      "id": "site-women-underwater",
+      "slug": "women-underwater",
+      "metrics": {
+        "traffic": {
+          "visitors": 145,
+          "views": 461,
+          "state": "verified",
+          "source": "ChatGPT Sites Analytics",
+          "asOf": "2026-10-03",
+          "period": "2026-09-04 to 2026-10-03",
+          "freshness": "current"
+        },
+        "seo": {
+          "clicks": null,
+          "impressions": null,
+          "averagePosition": null,
+          "indexedPages": null,
+          "state": "unavailable",
+          "source": "Search Console coverage metadata only",
+          "asOf": "2026-10-04",
+          "freshness": "unavailable"
+        },
+        "revenue": {
+          "actualRevenue": null,
+          "state": "not_connected",
+          "source": "No revenue integration",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "listings": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "content": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        }
+      },
+      "readiness": {
+        "featured": "not_connected",
+        "sponsorship": "not_connected",
+        "claimedListings": "not_connected",
+        "leadGeneration": "not_connected"
+      }
     },
     {
       "rank": 3,
@@ -68,7 +227,57 @@
       "ga4": "Covered",
       "searchConsole": "Not recorded",
       "sitemapUrls": null,
-      "isNew": false
+      "isNew": false,
+      "id": "site-women-s-cycling-directory",
+      "slug": "women-s-cycling-directory",
+      "metrics": {
+        "traffic": {
+          "visitors": 86,
+          "views": 733,
+          "state": "verified",
+          "source": "ChatGPT Sites Analytics",
+          "asOf": "2026-10-03",
+          "period": "2026-09-04 to 2026-10-03",
+          "freshness": "current"
+        },
+        "seo": {
+          "clicks": null,
+          "impressions": null,
+          "averagePosition": null,
+          "indexedPages": null,
+          "state": "unavailable",
+          "source": "Search Console coverage metadata only",
+          "asOf": "2026-10-04",
+          "freshness": "unavailable"
+        },
+        "revenue": {
+          "actualRevenue": null,
+          "state": "not_connected",
+          "source": "No revenue integration",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "listings": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "content": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        }
+      },
+      "readiness": {
+        "featured": "not_connected",
+        "sponsorship": "not_connected",
+        "claimedListings": "not_connected",
+        "leadGeneration": "not_connected"
+      }
     },
     {
       "rank": 4,
@@ -85,7 +294,57 @@
       "ga4": "Covered",
       "searchConsole": "Not recorded",
       "sitemapUrls": null,
-      "isNew": false
+      "isNew": false,
+      "id": "site-family-report-finder-australia",
+      "slug": "family-report-finder-australia",
+      "metrics": {
+        "traffic": {
+          "visitors": 8,
+          "views": 95,
+          "state": "verified",
+          "source": "ChatGPT Sites Analytics",
+          "asOf": "2026-10-03",
+          "period": "2026-09-04 to 2026-10-03",
+          "freshness": "current"
+        },
+        "seo": {
+          "clicks": null,
+          "impressions": null,
+          "averagePosition": null,
+          "indexedPages": null,
+          "state": "unavailable",
+          "source": "Search Console coverage metadata only",
+          "asOf": "2026-10-04",
+          "freshness": "unavailable"
+        },
+        "revenue": {
+          "actualRevenue": null,
+          "state": "not_connected",
+          "source": "No revenue integration",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "listings": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "content": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        }
+      },
+      "readiness": {
+        "featured": "not_connected",
+        "sponsorship": "not_connected",
+        "claimedListings": "not_connected",
+        "leadGeneration": "not_connected"
+      }
     },
     {
       "rank": 5,
@@ -102,7 +361,57 @@
       "ga4": "Covered",
       "searchConsole": "Not recorded",
       "sitemapUrls": null,
-      "isNew": false
+      "isNew": false,
+      "id": "site-quiet-coffee-atlas",
+      "slug": "quiet-coffee-atlas",
+      "metrics": {
+        "traffic": {
+          "visitors": 5,
+          "views": 29,
+          "state": "verified",
+          "source": "ChatGPT Sites Analytics",
+          "asOf": "2026-10-03",
+          "period": "2026-09-04 to 2026-10-03",
+          "freshness": "current"
+        },
+        "seo": {
+          "clicks": null,
+          "impressions": null,
+          "averagePosition": null,
+          "indexedPages": null,
+          "state": "unavailable",
+          "source": "Search Console coverage metadata only",
+          "asOf": "2026-10-04",
+          "freshness": "unavailable"
+        },
+        "revenue": {
+          "actualRevenue": null,
+          "state": "not_connected",
+          "source": "No revenue integration",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "listings": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "content": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        }
+      },
+      "readiness": {
+        "featured": "not_connected",
+        "sponsorship": "not_connected",
+        "claimedListings": "not_connected",
+        "leadGeneration": "not_connected"
+      }
     },
     {
       "rank": 6,
@@ -119,7 +428,57 @@
       "ga4": "Covered",
       "searchConsole": "Not recorded",
       "sitemapUrls": null,
-      "isNew": false
+      "isNew": false,
+      "id": "site-community-garden-atlas",
+      "slug": "community-garden-atlas",
+      "metrics": {
+        "traffic": {
+          "visitors": 3,
+          "views": 16,
+          "state": "verified",
+          "source": "ChatGPT Sites Analytics",
+          "asOf": "2026-10-03",
+          "period": "2026-09-04 to 2026-10-03",
+          "freshness": "current"
+        },
+        "seo": {
+          "clicks": null,
+          "impressions": null,
+          "averagePosition": null,
+          "indexedPages": null,
+          "state": "unavailable",
+          "source": "Search Console coverage metadata only",
+          "asOf": "2026-10-04",
+          "freshness": "unavailable"
+        },
+        "revenue": {
+          "actualRevenue": null,
+          "state": "not_connected",
+          "source": "No revenue integration",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "listings": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "content": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        }
+      },
+      "readiness": {
+        "featured": "not_connected",
+        "sponsorship": "not_connected",
+        "claimedListings": "not_connected",
+        "leadGeneration": "not_connected"
+      }
     },
     {
       "rank": 7,
@@ -136,7 +495,57 @@
       "ga4": "Covered",
       "searchConsole": "Not recorded",
       "sitemapUrls": null,
-      "isNew": false
+      "isNew": false,
+      "id": "site-peptide-provider-atlas",
+      "slug": "peptide-provider-atlas",
+      "metrics": {
+        "traffic": {
+          "visitors": 3,
+          "views": 16,
+          "state": "verified",
+          "source": "ChatGPT Sites Analytics",
+          "asOf": "2026-10-03",
+          "period": "2026-09-04 to 2026-10-03",
+          "freshness": "current"
+        },
+        "seo": {
+          "clicks": null,
+          "impressions": null,
+          "averagePosition": null,
+          "indexedPages": null,
+          "state": "unavailable",
+          "source": "Search Console coverage metadata only",
+          "asOf": "2026-10-04",
+          "freshness": "unavailable"
+        },
+        "revenue": {
+          "actualRevenue": null,
+          "state": "not_connected",
+          "source": "No revenue integration",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "listings": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "content": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        }
+      },
+      "readiness": {
+        "featured": "not_connected",
+        "sponsorship": "not_connected",
+        "claimedListings": "not_connected",
+        "leadGeneration": "not_connected"
+      }
     },
     {
       "rank": 8,
@@ -153,7 +562,57 @@
       "ga4": "Covered",
       "searchConsole": "Not recorded",
       "sitemapUrls": null,
-      "isNew": false
+      "isNew": false,
+      "id": "site-crochet-australia-directory",
+      "slug": "crochet-australia-directory",
+      "metrics": {
+        "traffic": {
+          "visitors": 3,
+          "views": 15,
+          "state": "verified",
+          "source": "ChatGPT Sites Analytics",
+          "asOf": "2026-10-03",
+          "period": "2026-09-04 to 2026-10-03",
+          "freshness": "current"
+        },
+        "seo": {
+          "clicks": null,
+          "impressions": null,
+          "averagePosition": null,
+          "indexedPages": null,
+          "state": "unavailable",
+          "source": "Search Console coverage metadata only",
+          "asOf": "2026-10-04",
+          "freshness": "unavailable"
+        },
+        "revenue": {
+          "actualRevenue": null,
+          "state": "not_connected",
+          "source": "No revenue integration",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "listings": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "content": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        }
+      },
+      "readiness": {
+        "featured": "not_connected",
+        "sponsorship": "not_connected",
+        "claimedListings": "not_connected",
+        "leadGeneration": "not_connected"
+      }
     },
     {
       "rank": 9,
@@ -170,7 +629,57 @@
       "ga4": "Covered",
       "searchConsole": "Not recorded",
       "sitemapUrls": null,
-      "isNew": false
+      "isNew": false,
+      "id": "site-community-gardens-australia",
+      "slug": "community-gardens-australia",
+      "metrics": {
+        "traffic": {
+          "visitors": 3,
+          "views": 12,
+          "state": "verified",
+          "source": "ChatGPT Sites Analytics",
+          "asOf": "2026-10-03",
+          "period": "2026-09-04 to 2026-10-03",
+          "freshness": "current"
+        },
+        "seo": {
+          "clicks": null,
+          "impressions": null,
+          "averagePosition": null,
+          "indexedPages": null,
+          "state": "unavailable",
+          "source": "Search Console coverage metadata only",
+          "asOf": "2026-10-04",
+          "freshness": "unavailable"
+        },
+        "revenue": {
+          "actualRevenue": null,
+          "state": "not_connected",
+          "source": "No revenue integration",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "listings": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "content": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        }
+      },
+      "readiness": {
+        "featured": "not_connected",
+        "sponsorship": "not_connected",
+        "claimedListings": "not_connected",
+        "leadGeneration": "not_connected"
+      }
     },
     {
       "rank": 10,
@@ -187,7 +696,57 @@
       "ga4": "Covered",
       "searchConsole": "Not recorded",
       "sitemapUrls": null,
-      "isNew": false
+      "isNew": false,
+      "id": "site-neurodiversity-assessment-atlas",
+      "slug": "neurodiversity-assessment-atlas",
+      "metrics": {
+        "traffic": {
+          "visitors": 2,
+          "views": 60,
+          "state": "verified",
+          "source": "ChatGPT Sites Analytics",
+          "asOf": "2026-10-03",
+          "period": "2026-09-04 to 2026-10-03",
+          "freshness": "current"
+        },
+        "seo": {
+          "clicks": null,
+          "impressions": null,
+          "averagePosition": null,
+          "indexedPages": null,
+          "state": "unavailable",
+          "source": "Search Console coverage metadata only",
+          "asOf": "2026-10-04",
+          "freshness": "unavailable"
+        },
+        "revenue": {
+          "actualRevenue": null,
+          "state": "not_connected",
+          "source": "No revenue integration",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "listings": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "content": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        }
+      },
+      "readiness": {
+        "featured": "not_connected",
+        "sponsorship": "not_connected",
+        "claimedListings": "not_connected",
+        "leadGeneration": "not_connected"
+      }
     },
     {
       "rank": 11,
@@ -204,7 +763,57 @@
       "ga4": "Covered",
       "searchConsole": "Not recorded",
       "sitemapUrls": null,
-      "isNew": false
+      "isNew": false,
+      "id": "site-older-womens-housing-directory",
+      "slug": "older-womens-housing-directory",
+      "metrics": {
+        "traffic": {
+          "visitors": 2,
+          "views": 21,
+          "state": "verified",
+          "source": "ChatGPT Sites Analytics",
+          "asOf": "2026-10-03",
+          "period": "2026-09-04 to 2026-10-03",
+          "freshness": "current"
+        },
+        "seo": {
+          "clicks": null,
+          "impressions": null,
+          "averagePosition": null,
+          "indexedPages": null,
+          "state": "unavailable",
+          "source": "Search Console coverage metadata only",
+          "asOf": "2026-10-04",
+          "freshness": "unavailable"
+        },
+        "revenue": {
+          "actualRevenue": null,
+          "state": "not_connected",
+          "source": "No revenue integration",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "listings": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "content": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        }
+      },
+      "readiness": {
+        "featured": "not_connected",
+        "sponsorship": "not_connected",
+        "claimedListings": "not_connected",
+        "leadGeneration": "not_connected"
+      }
     },
     {
       "rank": 12,
@@ -221,7 +830,57 @@
       "ga4": "Covered",
       "searchConsole": "Not recorded",
       "sitemapUrls": null,
-      "isNew": false
+      "isNew": false,
+      "id": "site-mortgage-broker-match",
+      "slug": "mortgage-broker-match",
+      "metrics": {
+        "traffic": {
+          "visitors": 2,
+          "views": 20,
+          "state": "verified",
+          "source": "ChatGPT Sites Analytics",
+          "asOf": "2026-10-03",
+          "period": "2026-09-04 to 2026-10-03",
+          "freshness": "current"
+        },
+        "seo": {
+          "clicks": null,
+          "impressions": null,
+          "averagePosition": null,
+          "indexedPages": null,
+          "state": "unavailable",
+          "source": "Search Console coverage metadata only",
+          "asOf": "2026-10-04",
+          "freshness": "unavailable"
+        },
+        "revenue": {
+          "actualRevenue": null,
+          "state": "not_connected",
+          "source": "No revenue integration",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "listings": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "content": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        }
+      },
+      "readiness": {
+        "featured": "not_connected",
+        "sponsorship": "not_connected",
+        "claimedListings": "not_connected",
+        "leadGeneration": "not_connected"
+      }
     },
     {
       "rank": 13,
@@ -238,7 +897,57 @@
       "ga4": "Covered",
       "searchConsole": "Not recorded",
       "sitemapUrls": null,
-      "isNew": false
+      "isNew": false,
+      "id": "site-family-law-directory-network",
+      "slug": "family-law-directory-network",
+      "metrics": {
+        "traffic": {
+          "visitors": 2,
+          "views": 12,
+          "state": "verified",
+          "source": "ChatGPT Sites Analytics",
+          "asOf": "2026-10-03",
+          "period": "2026-09-04 to 2026-10-03",
+          "freshness": "current"
+        },
+        "seo": {
+          "clicks": null,
+          "impressions": null,
+          "averagePosition": null,
+          "indexedPages": null,
+          "state": "unavailable",
+          "source": "Search Console coverage metadata only",
+          "asOf": "2026-10-04",
+          "freshness": "unavailable"
+        },
+        "revenue": {
+          "actualRevenue": null,
+          "state": "not_connected",
+          "source": "No revenue integration",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "listings": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "content": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        }
+      },
+      "readiness": {
+        "featured": "not_connected",
+        "sponsorship": "not_connected",
+        "claimedListings": "not_connected",
+        "leadGeneration": "not_connected"
+      }
     },
     {
       "rank": 14,
@@ -255,7 +964,57 @@
       "ga4": "Covered",
       "searchConsole": "Not recorded",
       "sitemapUrls": null,
-      "isNew": false
+      "isNew": false,
+      "id": "site-world-crochet-directory",
+      "slug": "world-crochet-directory",
+      "metrics": {
+        "traffic": {
+          "visitors": 2,
+          "views": 7,
+          "state": "verified",
+          "source": "ChatGPT Sites Analytics",
+          "asOf": "2026-10-03",
+          "period": "2026-09-04 to 2026-10-03",
+          "freshness": "current"
+        },
+        "seo": {
+          "clicks": null,
+          "impressions": null,
+          "averagePosition": null,
+          "indexedPages": null,
+          "state": "unavailable",
+          "source": "Search Console coverage metadata only",
+          "asOf": "2026-10-04",
+          "freshness": "unavailable"
+        },
+        "revenue": {
+          "actualRevenue": null,
+          "state": "not_connected",
+          "source": "No revenue integration",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "listings": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "content": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        }
+      },
+      "readiness": {
+        "featured": "not_connected",
+        "sponsorship": "not_connected",
+        "claimedListings": "not_connected",
+        "leadGeneration": "not_connected"
+      }
     },
     {
       "rank": 15,
@@ -272,7 +1031,57 @@
       "ga4": "Covered",
       "searchConsole": "Not recorded",
       "sitemapUrls": null,
-      "isNew": false
+      "isNew": false,
+      "id": "site-older-womens-cohousing-directory",
+      "slug": "older-womens-cohousing-directory",
+      "metrics": {
+        "traffic": {
+          "visitors": 1,
+          "views": 31,
+          "state": "verified",
+          "source": "ChatGPT Sites Analytics",
+          "asOf": "2026-10-03",
+          "period": "2026-09-04 to 2026-10-03",
+          "freshness": "current"
+        },
+        "seo": {
+          "clicks": null,
+          "impressions": null,
+          "averagePosition": null,
+          "indexedPages": null,
+          "state": "unavailable",
+          "source": "Search Console coverage metadata only",
+          "asOf": "2026-10-04",
+          "freshness": "unavailable"
+        },
+        "revenue": {
+          "actualRevenue": null,
+          "state": "not_connected",
+          "source": "No revenue integration",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "listings": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "content": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        }
+      },
+      "readiness": {
+        "featured": "not_connected",
+        "sponsorship": "not_connected",
+        "claimedListings": "not_connected",
+        "leadGeneration": "not_connected"
+      }
     },
     {
       "rank": 16,
@@ -289,7 +1098,57 @@
       "ga4": "Covered",
       "searchConsole": "Not recorded",
       "sitemapUrls": null,
-      "isNew": false
+      "isNew": false,
+      "id": "site-divorce-financial-adviser-world",
+      "slug": "divorce-financial-adviser-world",
+      "metrics": {
+        "traffic": {
+          "visitors": 1,
+          "views": 14,
+          "state": "verified",
+          "source": "ChatGPT Sites Analytics",
+          "asOf": "2026-10-03",
+          "period": "2026-09-04 to 2026-10-03",
+          "freshness": "current"
+        },
+        "seo": {
+          "clicks": null,
+          "impressions": null,
+          "averagePosition": null,
+          "indexedPages": null,
+          "state": "unavailable",
+          "source": "Search Console coverage metadata only",
+          "asOf": "2026-10-04",
+          "freshness": "unavailable"
+        },
+        "revenue": {
+          "actualRevenue": null,
+          "state": "not_connected",
+          "source": "No revenue integration",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "listings": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "content": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        }
+      },
+      "readiness": {
+        "featured": "not_connected",
+        "sponsorship": "not_connected",
+        "claimedListings": "not_connected",
+        "leadGeneration": "not_connected"
+      }
     },
     {
       "rank": 17,
@@ -306,7 +1165,57 @@
       "ga4": "Covered",
       "searchConsole": "Not recorded",
       "sitemapUrls": null,
-      "isNew": false
+      "isNew": false,
+      "id": "site-aged-care-navigation-directory",
+      "slug": "aged-care-navigation-directory",
+      "metrics": {
+        "traffic": {
+          "visitors": 1,
+          "views": 10,
+          "state": "verified",
+          "source": "ChatGPT Sites Analytics",
+          "asOf": "2026-10-03",
+          "period": "2026-09-04 to 2026-10-03",
+          "freshness": "current"
+        },
+        "seo": {
+          "clicks": null,
+          "impressions": null,
+          "averagePosition": null,
+          "indexedPages": null,
+          "state": "unavailable",
+          "source": "Search Console coverage metadata only",
+          "asOf": "2026-10-04",
+          "freshness": "unavailable"
+        },
+        "revenue": {
+          "actualRevenue": null,
+          "state": "not_connected",
+          "source": "No revenue integration",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "listings": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "content": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        }
+      },
+      "readiness": {
+        "featured": "not_connected",
+        "sponsorship": "not_connected",
+        "claimedListings": "not_connected",
+        "leadGeneration": "not_connected"
+      }
     },
     {
       "rank": 18,
@@ -323,7 +1232,57 @@
       "ga4": "Covered",
       "searchConsole": "Not recorded",
       "sitemapUrls": null,
-      "isNew": false
+      "isNew": false,
+      "id": "site-divorce-money-advisers",
+      "slug": "divorce-money-advisers",
+      "metrics": {
+        "traffic": {
+          "visitors": 1,
+          "views": 8,
+          "state": "verified",
+          "source": "ChatGPT Sites Analytics",
+          "asOf": "2026-10-03",
+          "period": "2026-09-04 to 2026-10-03",
+          "freshness": "current"
+        },
+        "seo": {
+          "clicks": null,
+          "impressions": null,
+          "averagePosition": null,
+          "indexedPages": null,
+          "state": "unavailable",
+          "source": "Search Console coverage metadata only",
+          "asOf": "2026-10-04",
+          "freshness": "unavailable"
+        },
+        "revenue": {
+          "actualRevenue": null,
+          "state": "not_connected",
+          "source": "No revenue integration",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "listings": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "content": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        }
+      },
+      "readiness": {
+        "featured": "not_connected",
+        "sponsorship": "not_connected",
+        "claimedListings": "not_connected",
+        "leadGeneration": "not_connected"
+      }
     },
     {
       "rank": 19,
@@ -340,7 +1299,57 @@
       "ga4": "Covered",
       "searchConsole": "Not recorded",
       "sitemapUrls": null,
-      "isNew": false
+      "isNew": false,
+      "id": "site-women-50-financial-advisers",
+      "slug": "women-50-financial-advisers",
+      "metrics": {
+        "traffic": {
+          "visitors": 1,
+          "views": 6,
+          "state": "verified",
+          "source": "ChatGPT Sites Analytics",
+          "asOf": "2026-10-03",
+          "period": "2026-09-04 to 2026-10-03",
+          "freshness": "current"
+        },
+        "seo": {
+          "clicks": null,
+          "impressions": null,
+          "averagePosition": null,
+          "indexedPages": null,
+          "state": "unavailable",
+          "source": "Search Console coverage metadata only",
+          "asOf": "2026-10-04",
+          "freshness": "unavailable"
+        },
+        "revenue": {
+          "actualRevenue": null,
+          "state": "not_connected",
+          "source": "No revenue integration",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "listings": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "content": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        }
+      },
+      "readiness": {
+        "featured": "not_connected",
+        "sponsorship": "not_connected",
+        "claimedListings": "not_connected",
+        "leadGeneration": "not_connected"
+      }
     },
     {
       "rank": 20,
@@ -357,7 +1366,57 @@
       "ga4": "G-T02L0H1Y00",
       "searchConsole": "Connected",
       "sitemapUrls": 31,
-      "isNew": true
+      "isNew": true,
+      "id": "site-aged-care-provider-finder-australia",
+      "slug": "aged-care-provider-finder-australia",
+      "metrics": {
+        "traffic": {
+          "visitors": null,
+          "views": null,
+          "state": "pending_period",
+          "source": "Launch record",
+          "asOf": "2026-10-04",
+          "period": null,
+          "freshness": "pending_period"
+        },
+        "seo": {
+          "clicks": null,
+          "impressions": null,
+          "averagePosition": null,
+          "indexedPages": null,
+          "state": "unavailable",
+          "source": "Search Console coverage metadata only",
+          "asOf": "2026-10-04",
+          "freshness": "unavailable"
+        },
+        "revenue": {
+          "actualRevenue": null,
+          "state": "not_connected",
+          "source": "No revenue integration",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "listings": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "content": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        }
+      },
+      "readiness": {
+        "featured": "not_connected",
+        "sponsorship": "not_connected",
+        "claimedListings": "not_connected",
+        "leadGeneration": "not_connected"
+      }
     },
     {
       "rank": 21,
@@ -374,7 +1433,57 @@
       "ga4": "G-T02L0H1Y00",
       "searchConsole": "Connected",
       "sitemapUrls": 30,
-      "isNew": true
+      "isNew": true,
+      "id": "site-adhd-assessment-cost-and-wait-time-finder",
+      "slug": "adhd-assessment-cost-and-wait-time-finder",
+      "metrics": {
+        "traffic": {
+          "visitors": null,
+          "views": null,
+          "state": "pending_period",
+          "source": "Launch record",
+          "asOf": "2026-10-04",
+          "period": null,
+          "freshness": "pending_period"
+        },
+        "seo": {
+          "clicks": null,
+          "impressions": null,
+          "averagePosition": null,
+          "indexedPages": null,
+          "state": "unavailable",
+          "source": "Search Console coverage metadata only",
+          "asOf": "2026-10-04",
+          "freshness": "unavailable"
+        },
+        "revenue": {
+          "actualRevenue": null,
+          "state": "not_connected",
+          "source": "No revenue integration",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "listings": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        },
+        "content": {
+          "verifiedCount": null,
+          "state": "unavailable",
+          "source": "Not yet recorded",
+          "asOf": null,
+          "freshness": "unavailable"
+        }
+      },
+      "readiness": {
+        "featured": "not_connected",
+        "sponsorship": "not_connected",
+        "claimedListings": "not_connected",
+        "leadGeneration": "not_connected"
+      }
     }
   ]
 }

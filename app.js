@@ -1,127 +1,30 @@
-const $ = selector => document.querySelector(selector);
-const fmt = value => value == null ? 'Unavailable' : value.toLocaleString('en-AU');
-
-const SOURCE_OPTIONS = [
-  ['chatgpt-sites', 'ChatGPT Sites analytics'],
-  ['ga4', 'Google Analytics (GA4) coverage'],
-  ['search-console', 'Search Console coverage'],
-  ['awaiting', 'Awaiting data']
-];
-
-let sites = [];
-
-function chip(text, className = '') {
-  return `<span class="chip ${className}">${text}</span>`;
-}
-
-function sourceInfo(site) {
-  const raw = (site.source || '').toLowerCase();
-  if (site.uniqueVisitors == null && site.pageViews == null) {
-    return { key: 'awaiting', label: 'Awaiting data' };
-  }
-  if (raw.includes('search console')) {
-    return { key: 'search-console', label: 'Search Console' };
-  }
-  if (raw.includes('ga4') || raw.includes('google analytics')) {
-    return { key: 'ga4', label: 'Google Analytics (GA4)' };
-  }
-  if (raw.includes('chatgpt sites')) {
-    return { key: 'chatgpt-sites', label: 'ChatGPT Sites analytics' };
-  }
-  return { key: 'awaiting', label: 'Awaiting data' };
-}
-
-function matchesSourceFilter(site, filter) {
-  if (!filter) return true;
-  if (filter === 'chatgpt-sites' || filter === 'awaiting') return sourceInfo(site).key === filter;
-  if (filter === 'ga4') return Boolean(site.ga4 && !['not recorded', 'not installed', 'none'].includes(site.ga4.toLowerCase()));
-  if (filter === 'search-console') return Boolean(site.searchConsole && site.searchConsole.toLowerCase() !== 'not recorded');
-  return false;
-}
-
-function evidence(site) {
-  if (sourceInfo(site).key === 'awaiting') {
-    return `Search Console: ${site.searchConsole} · GA4 tag: ${site.ga4} · Sitemap: ${site.sitemapUrls} URLs`;
-  }
-  return `Snapshot: ${site.snapshotPeriod} · GA4 coverage: ${site.ga4} · Search Console: ${site.searchConsole}`;
-}
-
-function sourceBadge(site) {
-  const source = sourceInfo(site);
-  return chip(`Metrics: ${source.label}`, `source ${source.key}`);
-}
-
-function render() {
-  const query = $('#search').value.trim().toLowerCase();
-  const decision = $('#decision').value;
-  const status = $('#status').value;
-  const source = $('#source').value;
-  const sort = $('#sort').value;
-
-  const list = sites.filter(site => {
-    const text = `${site.name} ${site.url}`.toLowerCase();
-    return (!query || text.includes(query)) &&
-      (!decision || site.decision === decision) &&
-      (!status || site.status === status) &&
-      matchesSourceFilter(site, source);
-  });
-
-  list.sort((a, b) =>
-    sort === 'name' ? a.name.localeCompare(b.name) :
-    sort === 'visitors' ? (b.uniqueVisitors ?? -1) - (a.uniqueVisitors ?? -1) :
-    sort === 'views' ? (b.pageViews ?? -1) - (a.pageViews ?? -1) :
-    (a.rank ?? -1) - (b.rank ?? -1)
-  );
-
-  $('#resultCount').textContent = `Showing ${list.length} of ${sites.length} sites`;
-  $('#cards').innerHTML = list.length ? list.map(site => {
-    return `<article class="card">
-      <div class="chips">${chip(site.decision, 'decision')}${chip(site.status, site.isNew ? 'new' : '')}${sourceBadge(site)}</div>
-      <h2><a href="${site.url}" target="_blank" rel="noopener">${site.name}</a></h2>
-      <div class="rank">${site.rank == null ? 'Internal dashboard' : `Portfolio #${site.rank}`}</div>
-      <div class="numbers">
-        <div><span>Visitors</span><strong>${fmt(site.uniqueVisitors)}</strong></div>
-        <div><span>Views</span><strong>${fmt(site.pageViews)}</strong></div>
-      </div>
-      <div class="evidence">${evidence(site)}</div>
-    </article>`;
-  }).join('') : `<div class="empty">No sites match those filters.</div>`;
-
-  $('#rows').innerHTML = list.map(site => {
-    return `<tr>
-      <td><a href="${site.url}" target="_blank" rel="noopener">${site.name}</a><br><small>${site.rank == null ? 'Internal' : `#${site.rank}`}</small></td>
-      <td>${chip(site.decision, 'decision')}</td>
-      <td>${chip(site.status, site.isNew ? 'new' : '')}</td>
-      <td>${sourceBadge(site)}</td>
-      <td>${fmt(site.uniqueVisitors)}</td>
-      <td>${fmt(site.pageViews)}</td>
-      <td class="evidence">${evidence(site)}</td>
-    </tr>`;
-  }).join('');
-}
-
-fetch('data/portfolio.json')
-  .then(response => {
-    if (!response.ok) throw Error('Data unavailable');
-    return response.json();
-  })
-  .then(data => {
-    sites = data.sites;
-    $('#visitorTotal').textContent = fmt(sites.reduce((total, site) => total + (site.uniqueVisitors ?? 0), 0));
-    $('#viewTotal').textContent = fmt(sites.reduce((total, site) => total + (site.pageViews ?? 0), 0));
-    for (const [id, key] of [['decision', 'decision'], ['status', 'status']]) {
-      for (const value of [...new Set(sites.map(site => site[key]))].sort()) {
-        $('#' + id).insertAdjacentHTML('beforeend', `<option>${value}</option>`);
-      }
-    }
-    for (const [value, label] of SOURCE_OPTIONS) {
-      $('#source').insertAdjacentHTML('beforeend', `<option value="${value}">${label}</option>`);
-    }
-    document.querySelectorAll('input,select').forEach(input => input.addEventListener('input', render));
-    render();
-  })
-  .catch(() => {
-    $('#cards').innerHTML = '<div class="empty">Portfolio data could not be loaded.</div>';
-  });
-
-if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('sw.js'));
+'use strict';
+const NAV=[['overview','Overview'],['sites','Sites'],['seo','SEO'],['monetisation','Monetisation'],['listings','Listings'],['content','Content'],['leads','Leads'],['claims-forms','Claims & Forms']];
+const STATES=['verified','unavailable','not_connected','pending_period','stale','failed_collection'];
+const $=s=>document.querySelector(s); let data=null;
+function el(tag,attrs={},children=[]){const n=document.createElement(tag);for(const [k,v] of Object.entries(attrs)){if(k==='class')n.className=v;else if(k==='text')n.textContent=v;else if(k==='href'){n.setAttribute('href',v)}else n.setAttribute(k,v)};for(const c of [].concat(children))n.append(c instanceof Node?c:document.createTextNode(String(c)));return n}
+function fmt(v){return v==null?'Unavailable':Number(v).toLocaleString('en-AU')}
+function stateLabel(v){return String(v).replaceAll('_',' ')}
+function chip(state){return el('span',{class:`chip ${STATES.includes(state)?state:''}`,text:stateLabel(state)})}
+function sourceLine(metric){return el('div',{class:'source-line',text:`Source: ${metric.source} · As of: ${metric.asOf||'Not recorded'} · State: ${stateLabel(metric.state)}`})}
+function route(){const p=location.hash.replace(/^#\/?/,'').split('/').filter(Boolean);return {site:p[0]==='site'?data.sites.find(s=>s.slug===p[1]):null,section:p[0]==='site'?(p[2]||'overview'):(p[0]||'overview')}}
+function routeHref(section,site){return site?`#/site/${site.slug}/${section}`:`#/${section}`}
+function header(title,intro,site){return el('div',{},[el('div',{class:'kicker',text:site?'Site workspace':'Portfolio workspace'}),el('h1',{text:title}),el('p',{class:'lede',text:intro})])}
+function metricCard(label,value,m){return el('article',{class:'metric'},[el('span',{text:label}),el('strong',{text:value}),sourceLine(m)])}
+function notice(text,warning=false){return el('div',{class:`notice${warning?' warning':''}`,text})}
+function panel(title,body=[]){return el('section',{class:'panel'},[el('h2',{text:title}),...[].concat(body)])}
+function activeSites(site){return site?[site]:data.sites}
+function setupNav(){const nav=$('#globalNav');nav.replaceChildren(...NAV.map(([id,label])=>el('a',{class:'nav-link',href:routeHref(id),text:label})));const sw=$('#siteSwitcher');sw.replaceChildren(el('option',{value:'',text:'All sites'}),...data.sites.map(s=>el('option',{value:s.slug,text:s.name})));sw.addEventListener('change',()=>{location.hash=sw.value?routeHref('overview',data.sites.find(s=>s.slug===sw.value)):'#/overview'});$('#menuButton').addEventListener('click',e=>{const open=nav.classList.toggle('open');e.currentTarget.setAttribute('aria-expanded',String(open))})}
+function overview(site){const sites=activeSites(site),measured=sites.filter(s=>s.metrics.traffic.state==='verified'),vis=measured.reduce((n,s)=>n+s.metrics.traffic.visitors,0),views=measured.reduce((n,s)=>n+s.metrics.traffic.views,0),m={source:'ChatGPT Sites Analytics',asOf:'2026-10-03',state:measured.length?'verified':'pending_period'};const out=[header(site?site.name:'Portfolio overview',site?'Verified evidence, readiness and operating status for this site.':'A truthful operating view across every directory. Visitors are site-level and are not deduplicated across sites.',site),el('div',{class:'metrics'},[metricCard('Sites',fmt(sites.length),{source:'Portfolio register',asOf:data.generatedAt,state:'verified'}),metricCard('Measured sites',fmt(measured.length),m),metricCard('Visitors',measured.length?fmt(vis):'Unavailable',m),metricCard('Views',measured.length?fmt(views):'Unavailable',m)]),notice(`Traffic period: ${data.portfolio.analyticsPeriod.label}. GA4 and Search Console are coverage metadata only, never the source of these traffic figures.`)];if(site)out.push(siteSummary(site));else out.push(decisionSummary());return out}
+function decisionSummary(){const counts={};data.sites.forEach(s=>counts[s.decision]=(counts[s.decision]||0)+1);return panel('Portfolio decisions',el('div',{class:'grid'},Object.entries(counts).map(([k,v])=>metricCard(k,String(v),{source:'Portfolio register',asOf:data.generatedAt,state:'verified'}))))}
+function siteSummary(s){const dl=el('dl',{class:'detail-list'});[['Decision',s.decision],['Status',s.status],['URL',s.url],['Top human routes',s.topHumanRoutes||'Not yet recorded'],['Infrastructure routes',s.topInfrastructureRoutes||'Not yet recorded']].forEach(([a,b])=>dl.append(el('div',{},[el('dt',{class:'meta-label',text:a}),el('dd',{text:b})])));return panel('Site evidence',dl)}
+function siteCard(s){const t=s.metrics.traffic;return el('article',{class:'site-card'},[el('div',{class:'chips'},[chip(t.state),el('span',{class:'chip',text:s.decision})]),el('h2',{},el('a',{href:routeHref('overview',s),text:s.name})),el('p',{text:`${fmt(t.visitors)} visitors · ${fmt(t.views)} views`}),sourceLine(t),el('div',{class:'site-actions'},[el('a',{class:'button',href:routeHref('overview',s),text:'Open workspace'}),el('a',{class:'button secondary',href:s.url,target:'_blank',rel:'noopener noreferrer',text:'Visit site'})])])}
+function sitesView(site){if(site)return [header(site.name,'Portfolio register details for this site.',site),siteSummary(site)];const wrap=el('div',{class:'grid sites'}),count=el('p',{'aria-live':'polite'});const q=el('input',{type:'search',placeholder:'Name or URL',id:'filterQ'}),decision=el('select',{id:'filterDecision'}),state=el('select',{id:'filterState'});decision.append(el('option',{value:'',text:'All decisions'}),...[...new Set(data.sites.map(s=>s.decision))].sort().map(v=>el('option',{value:v,text:v})));state.append(el('option',{value:'',text:'All states'}),...STATES.map(v=>el('option',{value:v,text:stateLabel(v)})));const render=()=>{const query=q.value.toLowerCase(),list=data.sites.filter(s=>(!query||`${s.name} ${s.url}`.toLowerCase().includes(query))&&(!decision.value||s.decision===decision.value)&&(!state.value||s.metrics.traffic.state===state.value));count.textContent=`Showing ${list.length} of ${data.sites.length} sites`;wrap.replaceChildren(...list.map(siteCard));if(!list.length)wrap.append(el('div',{class:'empty',text:'No sites match these filters.'}))};[q,decision,state].forEach(n=>n.addEventListener('input',render));render();return [header('Sites','Filter and open any site workspace.'),el('section',{class:'controls','aria-label':'Filter sites'},[el('label',{text:'Search'},q),el('label',{text:'Decision'},decision),el('label',{text:'Traffic state'},state)]),count,wrap]}
+function seo(site){const rows=activeSites(site).map(s=>{const m=s.metrics.seo;return el('tr',{},[el('td',{text:s.name}),el('td',{},chip(m.state)),el('td',{text:s.searchConsole}),el('td',{text:s.sitemapUrls==null?'Not yet recorded':String(s.sitemapUrls)}),el('td',{text:'Unavailable'}),el('td',{text:`${m.source} · ${m.asOf}`})])});return [header(site?`${site.name} · SEO`:'SEO coverage','Coverage is recorded separately from reporting metrics. No clicks, impressions, rankings or indexed-page counts are inferred.',site),notice('Search Console connection does not prove reporting data was collected. Reporting metrics remain unavailable until an integration supplies them.',true),table(['Site','Reporting state','Search Console coverage','Sitemap URLs','Clicks / impressions / ranking / indexed','Source / as of'],rows)]}
+function monetisation(site){const cards=activeSites(site).map(s=>panel(s.name,[el('p',{},[el('b',{text:'Actual revenue: '}),el('span',{text:'Unavailable'})]),sourceLine(s.metrics.revenue),el('p',{text:'Readiness — Featured: not connected · Sponsorship: not connected · Claimed listings: not connected · Lead generation: not connected'}),el('p',{class:'source-line',text:'Paid placement must remain separate from organic ranking. No prices or revenue have been recorded.'})]));return [header(site?`${site.name} · Monetisation`:'Monetisation','Honest actuals and integration readiness—without fabricated prices or revenue.',site),...cards]}
+function recorded(section,site){const label=section==='listings'?'Listings':'Content';const rows=activeSites(site).map(s=>{const m=s.metrics[section];return el('tr',{},[el('td',{text:s.name}),el('td',{text:m.verifiedCount==null?'Not yet recorded':fmt(m.verifiedCount)}),el('td',{},chip(m.state)),el('td',{text:`${m.source} · ${m.asOf||'Not recorded'}`}),el('td',{text:'Review queue available when a trusted data source is connected'})])});return [header(site?`${site.name} · ${label}`:label,'Verified records only. Missing counts are labelled Not yet recorded rather than zero.',site),table(['Site','Verified count','State','Source / as of','Review queue'],rows)]}
+function secure(section,site){const claims=section==='claims-forms';return [header(site?`${site.name} · ${claims?'Claims & Forms':'Leads'}`:(claims?'Claims & Forms':'Leads'),claims?'A safe integration boundary for future submissions.':'A safe integration boundary for future lead operations.',site),notice('A secure authenticated backend is required before this area can collect, display or process records. This static PWA stores no PII, health information, claims, forms or lead records.',true),panel('Current state',[chip('not_connected'),el('p',{text:'No records are displayed. Do not place personal or sensitive information in static JSON, browser storage or review placeholders.'})])]}
+function table(head,rows){return el('div',{class:'table-wrap'},el('table',{},[el('thead',{},el('tr',{},head.map(h=>el('th',{scope:'col',text:h})))),el('tbody',{},rows)]))}
+function render(){const r=route(),main=$('#main');if(!NAV.some(([x])=>x===r.section))r.section='overview';document.querySelectorAll('.nav-link').forEach(a=>{a.href=routeHref(a.textContent==='Claims & Forms'?'claims-forms':a.textContent.toLowerCase(),r.site);a.removeAttribute('aria-current');if(a.textContent.toLowerCase().startsWith(r.section.split('-')[0]))a.setAttribute('aria-current','page')});$('#siteSwitcher').value=r.site?.slug||'';const views={overview,sites:sitesView,seo,monetisation,listings:s=>recorded('listings',s),content:s=>recorded('content',s),leads:s=>secure('leads',s),'claims-forms':s=>secure('claims-forms',s)};main.replaceChildren(...views[r.section](r.site));document.title=`${NAV.find(x=>x[0]===r.section)[1]} · Directory Command Centre`;$('#globalNav').classList.remove('open');$('#menuButton').setAttribute('aria-expanded','false')}
+fetch('data/portfolio.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error();return r.json()}).then(d=>{data=d;setupNav();addEventListener('hashchange',render);render()}).catch(()=>$('#main').replaceChildren(notice('Portfolio data could not be loaded. Try again online.',true)));
+if('serviceWorker'in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').then(r=>r.update()));

@@ -1,59 +1,48 @@
 #!/usr/bin/env python3
-import json, pathlib, struct, sys
-ROOT=pathlib.Path(__file__).resolve().parents[1]
-errors=[]
-def ok(condition,message):
- print(('PASS' if condition else 'FAIL')+': '+message)
- if not condition: errors.append(message)
-try: data=json.loads((ROOT/'data/portfolio.json').read_text())
-except Exception as e: print('FAIL: portfolio JSON loads:',e);sys.exit(1)
-sites=data.get('sites',[])
-ok(len(sites)==22,'portfolio has exactly 22 rows')
-urls=[s.get('url') for s in sites]
-ok(len(urls)==len(set(urls)),'all site URLs are unique')
-ok(all(isinstance(u,str) and u.startswith('https://') for u in urls),'all URLs are absolute HTTPS links')
-new=[s for s in sites if s.get('isNew')]
-ok(len(new)==2,'exactly two sites are marked as new launches')
-expected={'Aged Care Provider Finder Australia':31,'ADHD Assessment Cost & Wait-Time Finder':30}
-for name,count in expected.items():
- matches=[s for s in new if s.get('name')==name]
- ok(len(matches)==1,f'new site present: {name}')
- if matches:
-  s=matches[0]
-  ok(s.get('searchConsole')=='Connected',f'{name}: Search Console connected')
-  ok(s.get('ga4')=='G-T02L0H1Y00',f'{name}: GA4 metadata preserved')
-  ok(s.get('sitemapUrls')==count,f'{name}: sitemap URL count is {count}')
-  ok(s.get('uniqueVisitors') is None and s.get('pageViews') is None,f'{name}: traffic is unavailable, not zero')
-ok(all(not(s.get('isNew') and (s.get('uniqueVisitors')==0 or s.get('pageViews')==0)) for s in sites),'no fabricated zero traffic for new launches')
-manifest_path=ROOT/'manifest.webmanifest'
-try: manifest=json.loads(manifest_path.read_text()); mok=True
-except Exception: manifest={};mok=False
-ok(mok,'manifest is valid JSON')
-icons=manifest.get('icons',[])
+import json, pathlib, re, struct, sys
+ROOT=pathlib.Path(__file__).resolve().parents[1]; errors=[]
+def ok(c,m):
+ print(('PASS' if c else 'FAIL')+': '+m)
+ if not c: errors.append(m)
+def load(rel):
+ try:return json.loads((ROOT/rel).read_text())
+ except Exception as e: errors.append(f'{rel} loads: {e}');return {}
+data=load('data/portfolio.json'); schema=load('data/portfolio.schema.json'); manifest=load('manifest.webmanifest'); vercel=load('vercel.json')
+sites=data.get('sites',[]); states={'verified','unavailable','not_connected','pending_period','stale','failed_collection'}
+ok(data.get('schemaVersion')=='2.0.0','schema version is 2.0.0')
+ok(bool(schema),'machine-readable schema loads')
+ok(len(sites)==22,'all 22 original portfolio rows remain')
+for key in ('id','slug','url'):
+ vals=[s.get(key) for s in sites];ok(all(vals) and len(vals)==len(set(vals)),f'all site {key}s are present and unique')
+ok(all(re.fullmatch(r'[a-z0-9-]+',s['slug']) for s in sites),'slugs are hash-route safe')
+ok(all(s['url'].startswith('https://') for s in sites),'all site URLs use HTTPS')
+required={'traffic','seo','revenue','listings','content'}
+ok(all(required<=s.get('metrics',{}).keys() for s in sites),'every site has all metric groups')
+for s in sites:
+ for name,m in s.get('metrics',{}).items():
+  ok(m.get('state') in states,f"{s['slug']} {name}: explicit valid state")
+  ok(bool(m.get('source')),f"{s['slug']} {name}: source recorded")
+  ok('asOf' in m and 'freshness' in m,f"{s['slug']} {name}: as-of and freshness recorded")
+traffic=[s['metrics']['traffic'] for s in sites]; verified=[m for m in traffic if m['state']=='verified']; pending=[m for m in traffic if m['state']=='pending_period']
+ok(len(pending)==2,'two new sites are pending a complete period')
+ok(all(m['visitors'] is None and m['views'] is None for m in pending),'pending traffic is unavailable, never zero')
+ok(all(m['source']=='ChatGPT Sites Analytics' and m['period']=='2026-09-04 to 2026-10-03' for m in verified),'verified traffic uses only the fixed ChatGPT Sites period')
+ok(all(s['metrics']['seo']['state']=='unavailable' for s in sites),'SEO reporting metrics remain unavailable')
+ok(all(s['metrics']['revenue']['actualRevenue'] is None for s in sites),'actual revenue is never fabricated')
+ok(all(all(v=='not_connected' for v in s['readiness'].values()) for s in sites),'monetisation readiness is explicitly not connected')
 for size in (192,512):
- rel=f'icons/icon-{size}.png';p=ROOT/rel
- ok(any(i.get('src')==rel and i.get('sizes')==f'{size}x{size}' for i in icons),f'manifest declares {size}px icon')
- good=False
- if p.exists():
-  try:
-   b=p.read_bytes();w,h=struct.unpack('>II',b[16:24]);good=b[:8]==b'\x89PNG\r\n\x1a\n' and (w,h)==(size,size)
-  except Exception: pass
- ok(good,f'{size}px PNG exists with correct dimensions')
-ok((ROOT/'icons/icon.svg').exists(),'SVG icon exists')
-for rel in ('index.html','styles.css','app.js','sw.js'):
- ok((ROOT/rel).exists(),f'{rel} exists')
-html=(ROOT/'index.html').read_text(); js=(ROOT/'app.js').read_text()
-ok('4 September–3 October 2026' in html,'fixed analytics period caveat is visible')
-ok('Unavailable' in js,'UI renders missing traffic as Unavailable')
-ok('id="source"' in html and 'Data source' in html,'data source filter is present')
-for label in ('ChatGPT Sites analytics','Google Analytics (GA4) coverage','Search Console coverage','Awaiting data'):
- ok(label in js,f'data source option is present: {label}')
-ok('matchesSourceFilter(site, source)' in js,'rendering applies the data source filter')
-ok('Metrics: ${source.label}' in js,'each site displays its metric source')
-ok('GA4 and Search Console filter coverage metadata only' in html,'coverage filters are explained without metric misattribution')
-ok('Search Console reports clicks and impressions, not these page views' in html,'Search Console metric distinction is visible')
-measured=[s for s in sites if s.get('uniqueVisitors') is not None or s.get('pageViews') is not None]
-ok(all(s.get('source')=='ChatGPT Sites Analytics' for s in measured),'all displayed traffic figures retain their ChatGPT Sites source')
-ok(all(s.get('uniqueVisitors') is None and s.get('pageViews') is None for s in new),'new sites remain awaiting data')
-print(f'\nValidation: {len(errors)} error(s)')
-sys.exit(bool(errors))
+ rel=f'icons/icon-{size}.png';p=ROOT/rel; declared=any(i.get('src')==rel and i.get('sizes')==f'{size}x{size}' for i in manifest.get('icons',[]));ok(declared,f'manifest declares {size}px icon')
+ try:b=p.read_bytes();valid=b[:8]==b'\x89PNG\r\n\x1a\n' and struct.unpack('>II',b[16:24])==(size,size)
+ except Exception:valid=False
+ ok(valid,f'{size}px PNG is valid')
+js=(ROOT/'app.js').read_text(); html=(ROOT/'index.html').read_text(); sw=(ROOT/'sw.js').read_text(); vh=json.dumps(vercel)
+ok('.innerHTML' not in js and 'insertAdjacentHTML' not in js,'application does not inject imported values as HTML')
+ok('textContent' in js,'safe text construction is used')
+ok(all(label in js for label in ['Overview','Sites','SEO','Monetisation','Listings','Content','Leads','Claims & Forms']),'all global sections are defined')
+ok('Site-level visitors' in js or 'site-level' in js,'visitor aggregation limitation is visible')
+ok('secure authenticated backend' in js,'sensitive workflows declare backend boundary')
+ok("cache:'no-store'" in js and "cache:'no-store'" in sw and 'skipWaiting' in sw,'service worker/data update strategy avoids stale corrections')
+ok('Content-Security-Policy' in vh and "object-src 'none'" in vh,'static CSP is configured')
+ok('lang="en-AU"' in html,'Australian English locale is declared')
+ok('44px' in (ROOT/'styles.css').read_text(),'minimum touch target sizing is present')
+print(f'\nValidation: {len(errors)} error(s)');sys.exit(bool(errors))
