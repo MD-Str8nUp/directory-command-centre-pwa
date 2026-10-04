@@ -47,4 +47,7 @@ $$;
 
 revoke all on function private_management.admin_summary() from public, anon, authenticated;
 revoke execute on function public.admin_summary() from public, anon, authenticated;
+-- The private schema is not exposed by PostgREST; this grant permits the
+-- authenticated SECURITY INVOKER wrapper to call the membership-gated function.
+grant execute on function private_management.admin_summary() to authenticated;
 grant execute on function public.admin_summary() to authenticated;
