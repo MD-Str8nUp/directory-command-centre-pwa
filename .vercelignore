@@ -1,0 +1,12 @@
+.git/
+.vercel/
+tests/
+docs/
+schemas/private/
+supabase/
+.env*
+README.md
+MIGRATION.md
+scripts/
+
+.env.example

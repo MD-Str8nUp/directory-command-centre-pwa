@@ -1,0 +1,10 @@
+'use strict';
+const crypto=require('node:crypto');
+const {HttpError}=require('./errors');
+const ROLES=Object.freeze({viewer:1,editor:2,admin:3});
+function requireOrigin(req,env){const raw=req.headers.origin;if(!raw)throw new HttpError(403,'origin_required','Origin is required.');let origin;try{origin=new URL(raw).origin}catch{throw new HttpError(403,'origin_denied','Origin is not allowed.')}if(!env.allowedOrigins.includes(origin))throw new HttpError(403,'origin_denied','Origin is not allowed.');return origin}
+function requireCsrf(req,env){const token=req.headers['x-csrf-token'];const cookie=(req.headers.cookie||'').split(';').map(v=>v.trim()).find(v=>v.startsWith('__Host-dcc-csrf='))?.slice(21);if(!token||!cookie)throw new HttpError(403,'csrf_required','CSRF verification failed.');const a=crypto.createHmac('sha256',env.csrfSecret).update(cookie).digest();const b=Buffer.from(String(token),'hex');if(a.length!==b.length||!crypto.timingSafeEqual(a,b))throw new HttpError(403,'csrf_invalid','CSRF verification failed.')}
+async function requireAdmin(req,env,{verifyAccessToken}){const match=/^Bearer (.+)$/.exec(req.headers.authorization||'');if(!match)throw new HttpError(401,'authentication_required','Authentication required.');const claims=await verifyAccessToken(match[1],env);if(!claims||claims.aud!==env.jwtAudience||!claims.sub)throw new HttpError(401,'invalid_token','Authentication failed.');const role=claims.app_metadata?.admin_role;if(!ROLES[role])throw new HttpError(403,'role_required','Administrator role required.');return {id:claims.sub,role}}
+function requireRole(actor,minimum){if(!ROLES[minimum]||ROLES[actor.role]<ROLES[minimum])throw new HttpError(403,'insufficient_role','Insufficient role.');}
+function secureHeaders(res){res.setHeader('Cache-Control','no-store, private');res.setHeader('Content-Type','application/json; charset=utf-8');res.setHeader('X-Content-Type-Options','nosniff');}
+module.exports={ROLES,requireOrigin,requireCsrf,requireAdmin,requireRole,secureHeaders};

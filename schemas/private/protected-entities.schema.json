@@ -1,0 +1,21 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://directory-command-centre.example/private/protected-entities.json",
+  "title":"Private management entity contracts",
+  "description":"Server-only records. Prohibited: health, patient, diagnosis, treatment, clinical, client-case or other special-category data.",
+  "oneOf":[
+    {"$ref":"#/$defs/listing"},{"$ref":"#/$defs/contentItem"},{"$ref":"#/$defs/offer"},{"$ref":"#/$defs/campaign"},{"$ref":"#/$defs/transaction"},{"$ref":"#/$defs/lead"},{"$ref":"#/$defs/claimRequest"},{"$ref":"#/$defs/formSubmission"},{"$ref":"#/$defs/task"}
+  ],
+  "$defs":{
+    "base":{"type":"object","required":["id","site_id","created_at","updated_at"],"properties":{"id":{"type":"string","format":"uuid"},"site_id":{"type":"string","format":"uuid"},"created_at":{"type":"string","format":"date-time"},"updated_at":{"type":"string","format":"date-time"}},"additionalProperties":false},
+    "listing":{"allOf":[{"$ref":"#/$defs/base"},{"type":"object","required":["name","status"],"properties":{"name":{"type":"string","minLength":1,"maxLength":200},"status":{"enum":["draft","review","published","archived"]},"public_url":{"type":["string","null"],"format":"uri"}}}]},
+    "contentItem":{"allOf":[{"$ref":"#/$defs/base"},{"type":"object","required":["title","status"],"properties":{"title":{"type":"string","minLength":1,"maxLength":200},"status":{"enum":["draft","review","published","archived"]},"slug":{"type":"string","pattern":"^[a-z0-9-]+$"}}}]},
+    "offer":{"allOf":[{"$ref":"#/$defs/base"},{"type":"object","required":["name","status"],"properties":{"name":{"type":"string","minLength":1,"maxLength":200},"status":{"enum":["draft","active","paused","retired"]},"price_minor":{"type":["integer","null"],"minimum":0},"currency":{"type":"string","pattern":"^[A-Z]{3}$"}}}]},
+    "campaign":{"allOf":[{"$ref":"#/$defs/base"},{"type":"object","required":["name","status"],"properties":{"name":{"type":"string","minLength":1,"maxLength":200},"status":{"enum":["draft","active","paused","completed","cancelled"]}}}]},
+    "transaction":{"allOf":[{"$ref":"#/$defs/base"},{"type":"object","required":["amount_minor","currency","status","external_reference"],"properties":{"amount_minor":{"type":"integer"},"currency":{"type":"string","pattern":"^[A-Z]{3}$"},"status":{"enum":["pending","settled","refunded","failed"]},"external_reference":{"type":"string","minLength":1,"maxLength":200}}}]},
+    "lead":{"allOf":[{"$ref":"#/$defs/base"},{"type":"object","required":["contact_name","contact_email","consent_at","status"],"properties":{"contact_name":{"type":"string","minLength":1,"maxLength":200},"contact_email":{"type":"string","format":"email","maxLength":320},"consent_at":{"type":"string","format":"date-time"},"status":{"enum":["new","contacted","qualified","closed","deleted"]}}}]},
+    "claimRequest":{"allOf":[{"$ref":"#/$defs/base"},{"type":"object","required":["listing_id","requester_name","requester_email","status"],"properties":{"listing_id":{"type":"string","format":"uuid"},"requester_name":{"type":"string","minLength":1,"maxLength":200},"requester_email":{"type":"string","format":"email","maxLength":320},"status":{"enum":["pending","approved","rejected","withdrawn"]}}}]},
+    "formSubmission":{"allOf":[{"$ref":"#/$defs/base"},{"type":"object","required":["form_key","payload","consent_at","status"],"properties":{"form_key":{"type":"string","pattern":"^[a-z0-9_-]+$"},"payload":{"type":"object","maxProperties":30},"consent_at":{"type":"string","format":"date-time"},"status":{"enum":["new","reviewed","resolved","deleted"]}}}]},
+    "task":{"allOf":[{"$ref":"#/$defs/base"},{"type":"object","required":["title","status","priority"],"properties":{"title":{"type":"string","minLength":1,"maxLength":200},"status":{"enum":["open","in_progress","blocked","done","cancelled"]},"priority":{"enum":["low","normal","high","urgent"]},"due_at":{"type":["string","null"],"format":"date-time"}}}]}
+  }
+}

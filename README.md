@@ -36,3 +36,7 @@ Serve over HTTP rather than opening `index.html` as a file (for example, `python
 ## Integration boundaries
 
 A production data collector must authenticate outside this static app, validate against the schema, redact all PII/health data, write atomically, and set source/as-of/freshness/state per metric. Revenue, listing, content, lead and claim records are not integrated. Secure server-side access control, audit logging, retention policy and consent handling are required before sensitive workflows are enabled.
+
+## Private management scaffold
+
+Private management is explicitly **not connected**. The fail-closed server boundary is under `api/`; protected record contracts are under `schemas/private/`; and a locked-down fresh-project migration is under `supabase/migrations/`. These materials are excluded from the static deployment bundle where appropriate. See `docs/PRIVATE_BACKEND_SETUP.md` before any future provisioning. No fake records, browser-storage fallback, health/patient/client data, or external resources are included.
