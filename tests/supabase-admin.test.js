@@ -9,5 +9,15 @@ test('admin supports anonymous device enrolment and authorised magic-link fallba
 test('device and magic-link sessions restore, refresh, scrub redirects and remain project pinned',()=>{const js=text('admin.js');for(const token of ['access_token','refresh_token','token_hash','error_description'])assert.match(js,new RegExp(token));assert.match(js,/history\.replaceState/);assert.match(js,/claims\.iss!==`\$\{PROJECT\}\/auth\/v1`/);assert.match(js,/claims\.aud!==\'authenticated\'/);assert.match(js,/claims\.exp<=now/);assert.match(js,/\/auth\/v1\/token\?grant_type=refresh_token/);assert.match(js,/result\.response\.status===401/);assert.match(js,/\/auth\/v1\/logout\?scope=local/);assert.match(js,/credentials:'omit'/)});
 test('pending device cannot bypass membership-gated RPCs and admin exposes only approved entities',()=>{const js=text('admin.js');assert.match(js,/await rpc\('admin_list',\{entity:'sites'\}\)/);assert.match(js,/isPending\(error\)/);assert.equal(js.includes('service_role'),false);const html=text('admin.html'),sql=text('supabase/migrations/0002_authenticated_admin_rpc.sql');for(const allowed of ['listings','content_items','tasks']){assert.match(html,new RegExp(allowed));assert.match(sql,new RegExp(`entity='${allowed}'`))}for(const blocked of ['leads','claim_requests','form_submissions','transactions'])assert.equal(html.includes(`value="${blocked}"`),false)});
 test('migration enforces membership, audit, RLS and durable rate limits',()=>{const sql=text('supabase/migrations/0002_authenticated_admin_rpc.sql').toLowerCase();for(const phrase of ['current_admin','admin_memberships','security definer','audit_events','rate_limit_buckets','enable row level security','force row level security','grant execute'])assert.match(sql,new RegExp(phrase.replaceAll(' ','\\s+')))});
+test('public RPC wrappers delegate to private functions and expose only authenticated execute',()=>{
+  const sql=text('supabase/migrations/0003_public_admin_rpc_wrappers.sql').toLowerCase();
+  for(const name of ['admin_list','admin_upsert','admin_delete']){
+    assert.match(sql,new RegExp(`create\\s+or\\s+replace\\s+function\\s+public\\.${name}`));
+    assert.match(sql,new RegExp(`security\\s+invoker[\\s\\S]+private_management\\.${name}\\(\\$1`));
+    assert.match(sql,new RegExp(`revoke\\s+execute\\s+on\\s+function\\s+public\\.${name}`));
+    assert.match(sql,new RegExp(`grant\\s+execute\\s+on\\s+function\\s+public\\.${name}[^;]+to\\s+authenticated`));
+  }
+  assert.match(sql,/from\s+public,\s*anon,\s*authenticated/);
+});
 test('setup documents anonymous-auth prerequisite and exact UUID approval',()=>{const docs=text('docs/PRIVATE_BACKEND_SETUP.md');assert.match(docs,/enable \*\*anonymous sign-ins\*\*/);assert.match(docs,/full UUID exactly matches/);assert.match(docs,/Never approve from the short code alone/);assert.match(docs,/should_create_user: false/)});
 test('service worker never caches private admin or API responses',()=>{const sw=text('sw.js');assert.match(sw,/startsWith\('\/api\/'\)/);assert.match(sw,/endsWith\('\/admin\.html'\)/);assert.match(sw,/cache:'no-store'/)});

@@ -8,7 +8,7 @@ The repository does not contain the project's public publishable key, and this t
 
 ## One-time project setup
 
-1. In the dedicated project's SQL editor/migration workflow, apply `0001_private_management.sql`, then `0002_authenticated_admin_rpc.sql`. Do not apply them to another project.
+1. In the dedicated project's SQL editor/migration workflow, apply `0001_private_management.sql`, then `0002_authenticated_admin_rpc.sql`, then `0003_public_admin_rpc_wrappers.sql`. Do not apply them to another project.
 2. In Supabase Auth, enable **anonymous sign-ins** but keep ordinary public email/password sign-up disabled. The administration page creates an anonymous Auth identity for each activated device. It also retains passwordless email magic links for the pre-created authorised email user and passes `should_create_user: false`. No password is collected by this app. Anonymous sign-in is the one required Supabase setting; this repository change does not enable it remotely.
 3. For device activation, have the user select **Activate this device** and send the displayed short approval code to the private administrator. In Supabase Auth users, find the anonymous user whose UUID matches both portions of that code (the first four and last four hexadecimal characters, ignoring hyphens). Confirm its full UUID exactly matches the UUID displayed on the pending screen, then insert that exact UUID into `private_management.admin_memberships` with the required role (`admin` for Jacqui's device). Never approve from the short code alone if more than one user could match. The user then selects **Check approval**. For the email fallback, insert the authorised email user's UUID in the same table. Membership is authoritative; user-editable metadata is ignored.
 4. Seed `private_management.sites` with each public slug used by `data/portfolio.json` (the UI manages only rows attached to one of these IDs).
@@ -20,7 +20,7 @@ The repository does not contain the project's public publishable key, and this t
 ## Security model
 
 - Direct table privileges remain revoked for `anon` and `authenticated`; RLS is enabled and forced with no permissive policies.
-- The browser can execute only `admin_list`, `admin_upsert` and `admin_delete`. Each call re-checks `auth.uid()` against strict memberships.
+- The browser calls the public-schema `admin_list`, `admin_upsert` and `admin_delete` RPC wrappers so default-public PostgREST `/rest/v1/rpc` routes resolve. Those wrappers are `SECURITY INVOKER` and delegate directly to the private-management functions; each private function re-checks `auth.uid()` against strict memberships.
 - Viewer can read; editor can write; only admin can delete. The first UI exposes listings, content and tasks only.
 - Every successful read/write emits an append-only audit event without record bodies. Database-backed per-user limits apply to reads and writes.
 - Device activation creates an anonymous Supabase Auth user, but that identity has no administration access until its exact `auth.uid()` is manually added to `private_management.admin_memberships`. The same membership gate applies to the authorised email fallback. Only the Supabase access token, refresh token and expiry are stored in `localStorage` on that browser/device under a project-specific key. No email, password, service-role key, record data or JWT signing secret is stored. Redirect credentials are scrubbed immediately with `history.replaceState`; the service worker never caches the private page or API responses.
