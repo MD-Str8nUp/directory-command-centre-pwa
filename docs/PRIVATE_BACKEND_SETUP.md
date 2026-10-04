@@ -15,7 +15,7 @@ The repository does not contain the project's public publishable key, and this t
 5. Copy the project's modern **publishable** key (`sb_publishable_…`) from Supabase API settings into Vercel as `SUPABASE_PUBLISHABLE_KEY`. It is public by design. Never configure a service-role key, legacy secret key or JWT signing secret.
 6. In Supabase Auth URL configuration, set the production site URL and add the exact production `https://…/admin.html` URL as an allowed redirect. Do not use a wildcard or add preview/local origins in production. Disable registrations after the user is created, and require MFA if the project plan supports it.
 7. Keep the Supabase magic-link email template's confirmation URL intact. Supabase may return either its verified token hash or an access-token fragment; `/admin.html` handles both, validates the token's issuer/audience against the pinned project, and immediately removes all auth material from browser history.
-8. Run the verification below, then open `/admin.html`. Request a link for the authorised account and confirm it returns to the production `/admin.html`. A reload intentionally signs the user out.
+8. Run the verification below, then open `/admin.html` on Jacqui's private iPhone. Request a link for the authorised account and confirm it returns to exactly `https://directory-command-centre-pwa.vercel.app/admin.html`. Reload and reopen the PWA to confirm the saved device session restores and refreshes without another email link. Then use **Sign out** and confirm a reload returns to the activation form.
 
 ## Security model
 
@@ -23,8 +23,10 @@ The repository does not contain the project's public publishable key, and this t
 - The browser can execute only `admin_list`, `admin_upsert` and `admin_delete`. Each call re-checks `auth.uid()` against strict memberships.
 - Viewer can read; editor can write; only admin can delete. The first UI exposes listings, content and tasks only.
 - Every successful read/write emits an append-only audit event without record bodies. Database-backed per-user limits apply to reads and writes.
-- The access/refresh tokens exist only in JavaScript memory. Redirect tokens are scrubbed immediately with `history.replaceState`. No localStorage, sessionStorage, IndexedDB, cookie or service-worker cache stores private data. Reloading/closing ends the session; expiry fails closed rather than silently persisting.
-- Requests use bearer tokens, not ambient cookies, so CSRF tokens are not applicable. CSP pins connections to the dedicated project; `no-referrer`, `no-store`, and exact project checks reduce cross-origin leakage. Supabase Auth allowed URLs must still be restricted to production.
+- After one successful magic-link activation, only the Supabase access token, refresh token and expiry are stored in `localStorage` on that browser/device under a project-specific key. No email, password, service-role key, record data or JWT signing secret is stored. Redirect credentials are scrubbed immediately with `history.replaceState`; the service worker never caches the private page or API responses.
+- Every accepted access token is checked for the exact pinned issuer, authenticated audience, subject and expiry. The app refreshes shortly before expiry, refreshes once after an unauthorised response, and removes the saved session on malformed state, expiry/revocation or refresh failure. Restoration refreshes through the pinned project before opening the workspace.
+- **Sign out** calls Supabase logout with local scope to revoke this device's refresh-token family, then removes the local saved session even if the network request fails. If a device is lost, revoke the user's sessions in Supabase Auth; the next refresh fails closed and clears local state.
+- Requests use bearer tokens, not ambient cookies, so CSRF tokens are not applicable. CSP pins connections to the dedicated project; `no-referrer`, `no-store`, and exact project checks reduce cross-origin leakage. Supabase Auth allowed URLs must still be restricted to the exact production URL. Do not activate shared or managed-by-others devices.
 - Leads, claims, forms, transactions and all public collection stay disabled.
 
 ## Verification

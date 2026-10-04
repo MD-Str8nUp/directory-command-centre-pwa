@@ -12,7 +12,7 @@ A dependency-free, mobile-first static PWA for evidence-led management of Jacqui
 - `vercel.json`: CSP and defensive response headers, plus revalidation for data and the service worker.
 - `scripts/validate.py`: semantic, safety and compatibility checks.
 
-The public dashboard remains static and read-only. A separate `/admin.html` first-phase interface can use the dedicated Supabase project for listings, content and tasks after operator setup. It uses passwordless email magic links, a public publishable key and memory-only Auth sessions; redirect credentials are scrubbed immediately and are never stored in browser storage. Leads and claims/forms remain intentionally non-functional.
+The public dashboard remains static and read-only. A separate `/admin.html` first-phase interface can use the dedicated Supabase project for listings, content and tasks after operator setup. It uses a one-use passwordless email link to activate Jacqui's trusted device, then stores only the Supabase access/refresh session in that device's browser storage. Tokens are issuer/audience/project checked, refreshed automatically, removed on expiry or refresh failure, and revoked/removed on explicit sign-out. Redirect credentials are scrubbed immediately. Leads and claims/forms remain intentionally non-functional.
 
 ## Data semantics
 
@@ -39,4 +39,4 @@ A production data collector must authenticate outside this static app, validate 
 
 ## Private administration
 
-The implementation is pinned to Supabase project `gqbekbrxftmfpgnkqodo`, but fails closed until its migrations, Jacqui's Auth user/membership and `SUPABASE_PUBLISHABLE_KEY` are configured by an operator. Vercel and the browser require no service-role or secret key. Strict membership checks, default-deny RLS, scoped security-definer RPCs, append-only audit events and database-backed rate limits protect the first-phase listings/content/tasks UI. See `docs/PRIVATE_BACKEND_SETUP.md`. No fake records, persistent browser-storage fallback, health/patient/client data, public lead intake or form collection are included.
+The implementation is pinned to Supabase project `gqbekbrxftmfpgnkqodo`, but fails closed until its migrations, Jacqui's Auth user/membership and `SUPABASE_PUBLISHABLE_KEY` are configured by an operator. Vercel and the browser require no service-role or secret key. Strict membership checks, default-deny RLS, scoped security-definer RPCs, append-only audit events and database-backed rate limits protect the first-phase listings/content/tasks UI. See `docs/PRIVATE_BACKEND_SETUP.md`. No fake records, health/patient/client data, public lead intake or form collection are included. Device persistence does not grant authority by itself: every request still needs a valid pinned-project JWT and passes the existing database membership/RLS/RPC checks.
