@@ -12,7 +12,7 @@ A dependency-free, mobile-first static PWA for evidence-led management of Jacqui
 - `vercel.json`: CSP and defensive response headers, plus revalidation for data and the service worker.
 - `scripts/validate.py`: semantic, safety and compatibility checks.
 
-The public dashboard remains static and read-only. A separate `/admin.html` first-phase interface can use the dedicated Supabase project for listings, content and tasks after operator setup. It uses a public publishable key and memory-only Auth sessions; leads and claims/forms remain intentionally non-functional.
+The public dashboard remains static and read-only. A separate `/admin.html` first-phase interface can use the dedicated Supabase project for listings, content and tasks after operator setup. It uses passwordless email magic links, a public publishable key and memory-only Auth sessions; redirect credentials are scrubbed immediately and are never stored in browser storage. Leads and claims/forms remain intentionally non-functional.
 
 ## Data semantics
 
