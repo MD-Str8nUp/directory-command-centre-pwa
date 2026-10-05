@@ -10,6 +10,72 @@
     },
     "visitorScope": "Site-level visitors; totals are not deduplicated across sites."
   },
+  "googleSnapshot": {
+    "source": "verified browser snapshot — not live API",
+    "asOf": "2026-10-05",
+    "state": "verified",
+    "liveApiState": "not_connected",
+    "ga4": {
+      "accountName": "Jacqui Griffin",
+      "propertyName": "Directory Websites",
+      "period": "last 7 days",
+      "activeUsers": 197,
+      "newUsers": 197,
+      "eventCount": 933,
+      "keyEvents": 0,
+      "sessionsByChannel": {
+        "Direct": 201,
+        "Organic Search": 15,
+        "Referral": 1,
+        "Unassigned": 1
+      }
+    },
+    "searchConsole": {
+      "webSearchClicks": 9,
+      "clicksProperty": "https://neuroassessmentaustralia.com.au/",
+      "clicksPropertyType": "URL-prefix",
+      "indexingState": "processing",
+      "verifiedProperties": [
+        {
+          "name": "aussiejag2010.chatgpt.site",
+          "type": "property",
+          "state": "verified"
+        },
+        {
+          "name": "ADHD Assessment Cost & Wait Time Finder",
+          "type": "URL-prefix",
+          "state": "verified"
+        },
+        {
+          "name": "Aged Care Provider Finder Australia",
+          "type": "URL-prefix",
+          "state": "verified"
+        },
+        {
+          "name": "https://neuroassessmentaustralia.com.au/",
+          "type": "URL-prefix",
+          "state": "verified"
+        },
+        {
+          "name": "womenscyclingdirectory.com",
+          "type": "URL-prefix",
+          "state": "verified"
+        }
+      ],
+      "notVerifiedProperties": [
+        {
+          "name": "neuroassessmentaustralia.com.au",
+          "type": "domain",
+          "state": "not_verified"
+        },
+        {
+          "name": "familylawassist.net.au",
+          "type": "property",
+          "state": "not_verified"
+        }
+      ]
+    }
+  },
   "sites": [
     {
       "rank": null,
