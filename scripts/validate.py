@@ -61,6 +61,6 @@ ok(re.search(r'<div class="topbar-actions"[^>]*>.*?<a class="button secondary sh
 ok('@media(max-width:560px)' in css and '.shell-action[aria-current=page]{display:none}' in css,'mobile header hides redundant current shell action only under 560px')
 ok(all(x in css for x in ['.brand{min-width:0;min-height:44px;flex:1 1 auto','.shell-action,.menu-button{min-height:44px','body{overflow-x:hidden','.brand-copy b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}']),'mobile header prevents overflow while preserving touch targets and readable brand')
 ok(all(x in js for x in ['Google verified browser snapshot','not a live API','No site-level GSC performance snapshot','Live Google API','Not connected']),'Google snapshot and live-API status are explicit and truthful')
-ok('frozen ChatGPT Sites Analytics snapshot' in html and 'not GA4 or Google Search Console data' in js,'snapshot traffic is visibly separated from Google data')
+ok('ChatGPT Sites is a frozen analytics snapshot' in html and 'Google has a dated verified browser snapshot' in html and 'Only the live Google API remains not connected' in html and 'not GA4 or Google Search Console data' in js,'snapshot traffic is visibly separated from dated Google evidence and the live API state')
 ok('44px' in css,'minimum touch target sizing is present')
 print(f'\nValidation: {len(errors)} error(s)');sys.exit(bool(errors))
